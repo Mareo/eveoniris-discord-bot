@@ -1,0 +1,22 @@
+services:
+  bot:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    develop:
+      watch:
+        - action: sync
+          path: ../bot
+          target: /app
+          ignore:
+            - .venv/
+        - action: rebuild
+          path: ../bot/pyproject.toml
+    environment:
+      DISCORD_BOT_TOKEN_FILE: /run/secrets/discord_bot_token
+    secrets:
+      - discord_bot_token
+
+secrets:
+  discord_bot_token:
+    file: ../secrets/discord-bot-token
