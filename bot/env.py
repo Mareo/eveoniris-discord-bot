@@ -3,6 +3,14 @@
 from os import environ
 
 
+def get_string(name: str, default: str = "", raise_if_missing: bool = True) -> str:
+    if name in environ:
+        return environ[name]
+    if raise_if_missing:
+        raise RuntimeError(f"Environment variable {name} was not set")
+    return default
+
+
 def get_secret(name: str, default: str = "", raise_if_missing: bool = True) -> str:
     if name in environ:
         return environ[name]
